@@ -1,5 +1,6 @@
 
 README TẠO TỪ BRANCH BUGFIXING
+Sửa file từ github remote repo
 
 A README.md file is a text file named "README" with the extension ".md," where "md" stands for Markdown. This file is commonly used in software projects and repositories to provide essential information and documentation about the project. The term "README" implies that it contains information that someone should read to understand and use the project effectively.
 
