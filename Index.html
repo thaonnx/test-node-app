@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>My App</title>
+    <script>
+        async function loadTasks() {
+            res = await fetch('get-tasks', {
+                method: "GET",
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            }
+            )
+            jsonRes = await res.json()
+            ulEL = document.getElementById("tasks")
+            for (task of jsonRes.tasks) {
+                liEl = document.createElement("li")
+                liEl.textContent = task
+                ulEL.appendChild(liEl)
+            }        
+
+            {
+                tasks: ["task1", "task2", "task3"]
+            } 
+        }     
+
+        async function handleSaveTask() {
+            ulEl = document.getElementById("tasks");
+            inputEl = document.getElementById("task");
+        
+            liEl = document.createElement("li");    
+            liEl.textContent  = inputEl.value;
+            ulEl.appendChild(liEl);
+
+            payload = {
+                task: inputEl.value
+            }
+
+            response = await fetch ('save-task', {
+                method: "POST",
+                body: JSON.stringify(payload),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+
+            jsonRes = await response.json()
+            console.log(jsonRes)
+        }
+    </script>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://unpkg.com/validator@latest/validator.min.js"></script>
+</head>
+
+<body onload="loadTasks()">
+    <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAJAAAAB/CAMAAAA3irvdAAAA5FBMVEX///8DJE0DJUwUIkjZYSz1ZiD0q430YBTQXy/yXAYAIUoAGUwAIEywUy0AG1PzYhfNXDDvi2Pvk2zvnHjxu6B7RD2/WjI0KUX//PYAHUz34dQAIVDtZCLxfkv32Mj98+zucTneYSbwbTCnVDj1bSsXIT5cNj9vPD34zLrBVi2ERjxLLUFHMELztZzzqID2YybxUQCaTTQlJECRSDjsglRUNjyqUTH16t4+LEP55uHvw6aFRTVONUEyKj/407tmP0FrPjcpJUjwso/Y3OGtsLrFytF/iJWapLC5vs/m6u1mbn6RlZ66unDPAAALjUlEQVR4nO1bi3LiuBLFAmEsK6MEAsFYAWwIEBbi8BjIJhAys/PYvfv//3O7bUhsmYd5TKburZyaqUqC3Ry3Wt2nJTmV+sAHPvCBD/wfo9bvX6ro9/vl30Yoe2+swX3/d/GpSCrpGjSnv4lQXqcyE4OkeiH1W0atalDRsJgCfkY9o/I7+JSvBXXTXFPAh5KK8e/wUMeQdGSrfDRiDajUO+/Pp1anNENifMBFxKH6u7uonMqCg9r2GkbEKlJpfH1nQqka8CkxEgshjWs8naNU1t6ZUEGntMdY3EPAkX+m1Lh7Xz4w5enEWhNBPqwziOt3nfrlC5268018NLsH2TH/noSewUEDcyMhzYSpL6pHf82f2STAaHVhyg+1eESvAptfOVRcJza5qfZV1xZvBRLuvryn9GUjHUxFZlfQe8iOlZ32dJAHm8INI3Un3GmqBjU+tzGifUKalaG0XktVElikG0tf1ZAytxVQyoFQwaCyxTaPmEZg0NrwRV+R0C6TWwnR5g1Xy3e4krfQQ/jUJa5SUDISsW79a8GZf2wzyWY7CW0ZChsJ1cZQ5R9ifNIkQonzz1Ia+T8lbfa2mGSsJ+R2Qlv4aOih+iPIoFHsO65KaRb9i9UQ1HhsgofikiDEeyehdQU8TKhZ96irFjFij+jIijAi/MYDf/pDttEgQUI7hmwXIZTRT9GvgN/mUrhXytUojHAS/cE32kRCu2JoJyHq5cBB4cuIX7xErLalMz6jX0jI9j3UXFhaeFJxYn1u4gct5dusLg08tNFgEkIaISqn19+BkPRiUx4Y5TypY7K0w8kJpt4tEuoFQR01u/rN3hnUNsaEmlR4APMzjsGDMp00qwsOGutULypU7Rk+QC+42Y6OHMfsyZHQDg9Z/t0KpVkrwBMQmqhVnqWxkk7rgmbSkfRNNBNdVFzeHMldRGOcwRdZO4aMYquXyzlRbcFKglIRFB5nrtYMG2bT/TN0IRSmvuLbnvva2+qRoOdmY9lYbq9lq7vPPoUsE16iMoBHn9QBsx+aHqqxMgya21M+tAYwmp70k0UjMgvN8+UT0i0xdI9iQIcGeQ0hauDfYVSUWCBWCbyHJqsiPp4ojICP0OEzlRDcpgO2yI9pP8C1FyWkASFa7/frQGjBlUlotZsrRX8HgzZTxtMqAhU327+Oewga3OUX7lqcuBBxQvpFqgI+vlUjmjMUPoHFKVxwrjYiKIyMZ+hSRCNyLxDSCzuI7CCU16VsKdmY8K5OjcvljX1IRgs77EKi2S8g+Me/gFAeZRCESNQBbOh4or66sYztdVphjDGmV09OSOQLIIPm0SlGiDmB0HxrLzrgooHiRN5zIVpOTojWYY4NlIjlbOY3YK8rC2UQb3IYvQiEEZCu01MToiCDYsIeMrEnw5O2ch/vaFnaxXRzckKSFrkqy15gBkWXOGFgm7GpP4K8iqttpySEnQ9TkjS5yYEMKkR6vjxEcCmqlghPZzww0IjwPMGQtWw1Jz75T66/ArK88F0ZVdGEv+CIn5rQmarV2cOGZWGaYVFBGdSeExLCHovOo5oEdOLIyalrwjn/n7NQp+OMBsH+1hwcQ4i1ZDy9YBL6tB7mJ1WFMPMMOpBe+JGOIIQOp86VOmJkMzQ1/DX+4Pguegv3wwkR+zP4uxtfXNjW46og5gBS5udQx30oIfhWDg+Xi6+Q7wPQz2knumRysIc4x2ZmYavCf1/wIpgJrSMfSojwoSPouXkkHWSQwS7g+FlmNiD7zfaLmHUg9gIK8cBcJddDCbEeynN+LB2/tzvDybrqOw8lZGECmW/uzvdgZPegA2mY9lGE/Cn/pG5pEMtMAlXu2iOodLNlijqIENRpaFYcpqlVdVRKgoGSHtkNtLhn7AgPcasIVboYLWKE2/NmksVV2mzZqjwQsrmwj/AQZjN/zydimEHtDomODRC4n6YoOnR45jAPodzkfATPqcogYi2aHh3ndwGsNIt2JF/Y9gJD0sLnO8BDRBuCGJ6oM56QHBXu7u0wvydSEyoDIeP4D3jIkKFmkHNb1TbgNuMxgZlnXK5VhAjHqT/gEFsHELJbLjbk6lRhbtJd52tBHWV1y2/k3B45gBDcizJoqPDh1kiX98l2np51GeuJ+IPrCYzQ/T3E2yjXlcUFAj6X0OcnA26KzBRhZz7hROEHzLJ0BmWQWjMscLlMuntZkdQrRR+JEN/uAUNmLWVQ1JwN8lrPJrSTSmWNWNtI7KJH6Yv5KURoY0R2Aow9ersoYk78pPiH4WqPuFt1hV/XWip3XvEosL9UnZyD2Gy3MlS/CK563vhAItjkW6V+qfbEmtX2u3R9uRvoriVUE2/7hVB5aJGF/Azzi4Mwok3qSRlceF/fSMiNlCK9YakHBYaZyBX19YTccP/oQa2IrGARm53pYSv+5ux6gB3nDbmh6iD7JXdbug1QymwhRGXIjtNV7cwzbx/KHYRGX65WiPGB52OMLHcCzeI2QsU3MwClQeDa8PWjL40dhLomDjPxT0ysOUeBLXQA3hUbCUnaZv6eCUFj8RMidvABGOHWYDsh0V3RWCta3xo9Ym8hREXbDt0TN/P2N6shEhLaAUgnCQltN7ObkLpO8EEoRiihpZMR2hXU/6uEtHcipHd5OhnYNkKQhxKa4YPtMUSd+FnSDXC2Zep9zGwntBc2E9oH2wgZuNSsi7X3+WvAuOG4XJMGEbJBfkgj0jEGd6IQUQ0uLW0kVF6e0b7TabNbjOJJ4t7pXSd6mnurmSU6d8jFjRkEz2w1E0IFGqqZxcOwrIX0qHT3P01ey+JCgKvYY9ZLaJdkl9EyWBhxEl74hW5hAQLIM+r7UaplXRCgIjfzs0nIIEx3I2imygkMXuj0HORHNJdYwwaOvCGySZuOcrWgAx1dDpTlCuhciUPXR+BaPILEVPsp7BFnJYxOXdS/Vms7rJX/rGbruo479mdzW2lfwVabGkmbIMAU7JTWVFmbtXL+BDGM+jh7WZ2iu1Vm5VqlelkYu0GzIEszpi7AofY7p3sdvISWk6obKFi/IJRmDQensAcdw/29IerXFxf5QuEOUMjnL8bXdQF/NpYq3hnMTRbXaIQVcad6D0zrVGTS6kpe8HjsZnGWgaq3bC3eVq7wJ7HKYfBxptFK22pT5oMNHWrsdyi9b0h6Zq1fDIYkMGx1J7ebEjI0XO5tozj7YqkrOa+Ebvc/tj8WuDy97kS5P3ttm5vmzcOi2x01JpNSqXQL/88mk8Go2231bsxPtgX3qscylnTYBHfyU6m/vn1P/r7F1BW0OeFrPb4MCv9Ekg3/AMGRJfzBxmOU6+/C24hmp0sQgdlU6uePv3/+SO6iahMSfml4gk2ON2D7Y89hohoXtdRfP779/QN8lBgVqVPdeVEPVxwHZj25wtOvYaT+/uvnvz/++Tc5oVTlGjPJJLaVeAT4A24nGxcYOd9/fvv+8/u3PQilaoV7mNuZrrU+tvcCWrA5agZqZIMl3B8///n2n334wGN0JDrpfIGUjiRl21Y7A2FpuK8Z+vu/e/nHx7Rg4NGA0iJ91IYQNPE37RwIGCGyx77w0UH9QL1cl2D19xNLUmrBtQRrYLrrF0GjfvybAyAAXfQSdc9ebkwzEDVJCRGNaaY5LJZcrDRG/UTvMNX61z4l6pSeel+YtSldqoAaw65mI1+zSN0YX57uDaba5bVhCA9ispm5fVrMGZQpPz3HkzLTgpxtWWy+GJw7/k4WSIPx44lfqJp+HRuBn6hO3cztZNBtt3pXwxvCmLUEZ+RmOJ+12t1BI+e4cCGOFLK5/BWvLZYrlxeuMEILlv7hTyfcFDr+n177HArdUj1/Of11b5tNq5d50IKgzMT67m0lhwQe4dSBTPUd3uuqVTr9Qn7sytXLK3qg0t5Wp93xRaH/XHnX1/DK5VptWql2Opf9bLbgI5vtP3aeK5VpbVcL8IEPfOADH/gfxn8BTWBgg043Xy0AAAAASUVORK5CYII=">
+    <div>
+        <label>Add Task</label> 
+        <input  id="task" type="text" placeholder="new task"/>
+        <button onclick="handleSaveTask()">Save</button>
+    </div>
+
+    <ul id="tasks"></ul>   
+
+</body>
+</html>
