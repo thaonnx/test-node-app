@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-console.log("Mirror, Mirrow on the wall. Who is the fairest of them all")
+console.log("Mirror, Mirror on the wall. Who is the fairest of them all???)
 
 
 app.use(bodyParser.json())
