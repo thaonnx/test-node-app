@@ -1,3 +1,9 @@
+06/12/23 - Update từ Local
+Nhiet do hom nay tai HCM la 28 do c
+Nhiet do tai Ha Noi la 18 do c
+
+USA California lanh ghe. chi 2 do.
+
 To check the orginal config: git config --get pull.rebase
 
 

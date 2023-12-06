@@ -1,7 +1,7 @@
 const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
-var thao test =  "Some text"
+
 
 
 app.use(bodyParser.json())
