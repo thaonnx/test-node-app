@@ -3,7 +3,7 @@ const app = express()
 const bodyParser = require('body-parser')
 
 console.log("Hello world! My name is Thao Nguyen. Nice to meet you")
-console.log("Je ne pas change. Bang bang!")
+console.log("Je ne pas Bang bang")
 
 
 app.use(bodyParser.json())
