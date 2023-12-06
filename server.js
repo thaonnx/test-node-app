@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-console.log("Hello world! My name is Thao Nguyen")
+console.log("Hello world! My name is Thao Nguyen. Nice to meet you")
 
 
 app.use(bodyParser.json())
