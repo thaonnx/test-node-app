@@ -2,6 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
+console.log("Gold age II")
 
 
 app.use(bodyParser.json())
