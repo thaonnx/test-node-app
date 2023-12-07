@@ -2,7 +2,7 @@ const express = require('express')
 const app = express()
 const bodyParser = require('body-parser')
 
-console.log("Logiteck K380s")
+
 
 app.use(bodyParser.json())
 app.use('/', express.static(__dirname + '/'))
